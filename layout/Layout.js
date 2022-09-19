@@ -13,22 +13,22 @@ import Newsletter from "components/footer/Newsletter";
 // https://github.com/getnacelle/nacelle-react/tree/main/packages/react-hooks
 
 function Layout({ children }) {
-    const [, { clearCart }] = useCart();
-    const [{ completed }, { clearCheckoutData }] = useCheckout();
-    const [headerData, setHeaderData] = useState([]);
-    const [footerData, setFooterData] = useState([]);
-    const [socialData, setSocialData] = useState([]);
-    const [productData, setProductData] = useState([]);
+  const [, { clearCart }] = useCart();
+  const [{ completed }, { clearCheckoutData }] = useCheckout();
+  const [headerData, setHeaderData] = useState([]);
+  const [footerData, setFooterData] = useState([]);
+  const [socialData, setSocialData] = useState([]);
+  const [productData, setProductData] = useState([]);
 
-    useEffect(() => {
-        if (completed) {
-            clearCheckoutData();
-            clearCart();
-        }
-    }, [completed, clearCheckoutData, clearCart]);
+  useEffect(() => {
+    if (completed) {
+      clearCheckoutData();
+      clearCart();
+    }
+  }, [completed, clearCheckoutData, clearCart]);
 
-    useEffect(() => {
-        const query = `
+  useEffect(() => {
+    const query = `
       fragment NavigationItem on NavigationGroupItem {
         title
         url
@@ -60,34 +60,28 @@ function Layout({ children }) {
       }
     }
     `;
-        nacelleClient.query({ query }).then(({ navigation }) => {
-            setHeaderData(
-                navigation.find((nav) => nav.groupId === "header").items
-            );
-            setFooterData(
-                navigation.find((nav) => nav.groupId === "footer").items
-            );
-            setSocialData(
-                navigation.find((nav) => nav.groupId === "social").items
-            );
-        });
-        nacelleClient.products().then((res) => {
-            console.log(res);
-            setProductData(res);
-        });
-    }, []);
-    return (
-        <SiteProvider>
-            <main>
-                <Header productData={productData} headerData={headerData} />
-                <MobileMenu productData={productData} headerData={headerData} />
-                <SidebarCart />
-                {React.cloneElement(children, { productData })}
-                <Newsletter />
-                <Footer footerData={footerData} socialData={socialData} />
-            </main>
-        </SiteProvider>
-    );
+    nacelleClient.query({ query }).then(({ navigation }) => {
+      setHeaderData(navigation.find((nav) => nav.groupId === "header").items);
+      setFooterData(navigation.find((nav) => nav.groupId === "footer").items);
+      setSocialData(navigation.find((nav) => nav.groupId === "social").items);
+    });
+    nacelleClient.products().then((res) => {
+      //console.log(res);
+      setProductData(res);
+    });
+  }, []);
+  return (
+    <SiteProvider>
+      <main>
+        <Header productData={productData} headerData={headerData} />
+        <MobileMenu productData={productData} headerData={headerData} />
+        <SidebarCart />
+        {React.cloneElement(children, { productData })}
+        <Newsletter />
+        <Footer footerData={footerData} socialData={socialData} />
+      </main>
+    </SiteProvider>
+  );
 }
 
 export default Layout;

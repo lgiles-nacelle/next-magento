@@ -1,4 +1,4 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript } from "next/document";
 class MyDocument extends Document {
   render() {
     return (
@@ -9,8 +9,7 @@ class MyDocument extends Document {
           <meta name="theme-color" content="#4f46e5" />
           <meta
             name="description"
-            content=" Next.js reference store built using Nacelle, Shopify, and
-            Contentful."
+            content=" Next.js reference store built using Magento."
           />
         </Head>
         <body>

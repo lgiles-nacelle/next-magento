@@ -1,10 +1,11 @@
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const ProductGallery = ({ product }) => {
   const [activeImage, setActiveImage] = useState(product.content.featuredMedia);
   useEffect(() => {
     setActiveImage(product.content.featuredMedia);
+    //console.log("product.content", product.content);
   }, [product]);
   return (
     <>
@@ -35,8 +36,8 @@ const ProductGallery = ({ product }) => {
         </div>
         <div className="w-full aspect-w-1 aspect-h-1 relative rounded-lg overflow-hidden">
           <Image
-            src={`https://zyed-001.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.static/-/Sites-apparel-m-catalog/default/dw2413bfcb/images/${activeImage.src}`}
-            alt="altText"
+            src={activeImage.src}
+            alt={activeImage.altText}
             layout="fill"
             objectFit="cover"
           />
