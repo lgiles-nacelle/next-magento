@@ -1,10 +1,12 @@
-import Head from 'next/head';
+import Head from "next/head";
 
 const HeadComponent = ({ title }) => {
   return (
     <Head>
       <title>
-        {title ? `Next Reference Store | ${title}` : 'Next Reference Store'}
+        {title
+          ? `Magento Next Reference Store | ${title}`
+          : "Magento Next Reference Store"}
       </title>
     </Head>
   );

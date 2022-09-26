@@ -20,11 +20,12 @@ const Components = {
 
 const DynamicComponent = ({ component, fields, ...otherProps }) => {
   // check if component is defined above
-  if (component === "1column") {
+  if (
+    component === "page" ||
+    component === "block" ||
+    component === "1column"
+  ) {
     component = "mag1Col";
-  }
-  if (component === "2column") {
-    component = "mag2Col";
   }
 
   if (typeof Components[component] !== "undefined") {
