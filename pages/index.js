@@ -31,6 +31,6 @@ export async function getStaticProps({ params }) {
   const content = await nacelleClient.content({
     handles: ["home-page-block"],
   });
-  console.log("content", content);
+  //console.log("content", content);
   return { props: content?.[0] || {} };
 }

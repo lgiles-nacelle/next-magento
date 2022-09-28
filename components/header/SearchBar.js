@@ -1,14 +1,14 @@
-import { Popover, Transition } from '@headlessui/react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useState, Fragment } from 'react';
-import { nacelleClient } from 'services';
-import { searchProducts } from 'utils/searchProducts';
+import { Popover, Transition } from "@headlessui/react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState, Fragment } from "react";
+import { nacelleClient } from "services";
+import { searchProducts } from "utils/searchProducts";
 
 const SearchBar = ({ productData, isMobile }) => {
   const router = useRouter();
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isVisible, setIsVisible] = useState(true);
   const handleSearch = (e) => {
@@ -17,7 +17,7 @@ const SearchBar = ({ productData, isMobile }) => {
     setResults(
       searchProducts({
         products: productData,
-        query: e.target.value
+        query: e.target.value,
       }).slice(0, 3)
     );
   };
@@ -30,13 +30,13 @@ const SearchBar = ({ productData, isMobile }) => {
     <div className="relative">
       <div
         className={`flex-1 flex items-center justify-center px-2 lg:ml-6 lg:justify-end${
-          isMobile ? '' : ' hidden lg:block'
+          isMobile ? "" : " hidden lg:block"
         }`}
       >
         <div className="max-w-lg w-full lg:max-w-xs">
           <label htmlFor="search" className="sr-only">
             Search
-          </label>{' '}
+          </label>{" "}
           <div className="relative">
             <div className=" absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ">
               <svg
@@ -84,15 +84,29 @@ const SearchBar = ({ productData, isMobile }) => {
             </h2>
             <div>
               {results.map((result, i) => {
+                // console.log("result", result);
                 const { handle, title, featuredMedia } = result.content;
-                const { compareAtPrice, price } = result.variants[0];
+                // console.log("featuredMedia", featuredMedia);
+                let compareAtPrice = 0;
+                let price = 0;
+
+                if (result.variants.length > 0) {
+                  //Then grab the compareAtPrice and assign it to the variable
+                  if (result.variants[0].compareAtPrice) {
+                    compareAtPrice = result.variants[0].compareAtPrice;
+                  }
+                  if (result.variants[0].price) {
+                    price = result.variants[0].price;
+                  }
+                }
+
                 return (
                   <div key={i}>
                     <Link href={`/products/${handle}`} passHref>
                       <a className="py-6 flex">
                         <div className="relative flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
                           <Image
-                            src={featuredMedia.thumbnailSrc}
+                            src={featuredMedia.src}
                             alt={featuredMedia.altText}
                             layout="fill"
                             objectFit="cover"
@@ -107,7 +121,7 @@ const SearchBar = ({ productData, isMobile }) => {
                                   <>
                                     <span className="text-red-600">
                                       ${price.toFixed(2)}
-                                    </span>{' '}
+                                    </span>{" "}
                                     <span className="line-through">
                                       ${compareAtPrice.toFixed(2)}
                                     </span>
