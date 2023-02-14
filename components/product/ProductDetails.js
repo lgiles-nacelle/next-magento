@@ -9,7 +9,7 @@ const ProductDetails = ({ product }) => {
   let options = null;
   if (product?.content?.options?.some((option) => option.values.length > 1)) {
     options = product?.content?.options;
-    if (product.variants[0].content === null) {
+    if (product.variants[0]?.content === null) {
       product.variants = product.variants.map((v) =>
         generateVariantSelectedOptions(v, options)
       );

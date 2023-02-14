@@ -8,7 +8,7 @@ module.exports = {
       "images.ctfassets.net",
       "tailwindui.com",
       "zyed-001.sandbox.us01.dx.commercecloud.salesforce.com",
-      "demo.nacelle-magento.com",
+      "3da1c38415.nxcli.io",
     ],
   },
   i18n: {
